@@ -5,7 +5,7 @@ const timesheetSchema = new Schema(
     {
         checkIn: { type: Date, required: true },
         checkOut: { type: Date },
-        userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+        id: { type: String, required: true },
     },
     { timestamps: true },
 );
