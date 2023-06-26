@@ -20,30 +20,20 @@ export const login = async (dispatch, user) => {
 
 export const register = async (dispatch, user) => {
   try {
-    dispatch(loginStart());
     const res = await axios.post(`http://localhost:3000/api/user/create`, {
       fullname: user.fullname,
       username: user.username,
       password: user.password,
       date: user.date,
       mail: user.mail,
-      va: user.ingame,
-      avatar: "",
-      role: "user",
+      gender: user.gender,
+      avatar: user.avatar,
+      role: user.role,
       phone: user.phone,
-      salary: 0,
+      salary: user.salary,
     });
-    if (res.status == 200) {
-      const res2 = await axios.post(`http://localhost:3000/api/auth/login`, {
-        username: user.username,
-        password: user.password,
-      });
-      dispatch(loginSuccess(res.data.user));
-      localStorage.setItem("accessToken", res.data.token.accessToken);
-      alert("Tạo tài khoản thành công");
-    }
+    alert("Tạo tài khoản thành công");
   } catch (error) {
-    dispatch(loginFailure());
     alert("Tạo tài khoản thất bại");
   }
 };

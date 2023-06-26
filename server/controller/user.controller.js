@@ -1,9 +1,14 @@
+const { v4: uuidv4 } = require("uuid");
 const User = require("../model/User");
-
 const UserController = {
     create: async (req, res) => {
         try {
-            const newUser = await User.create(req.body);
+            const id = uuidv4();
+
+            const newUser = await User.create({
+                ...req.body,
+                id: id,
+            });
             return res.status(200).json({
                 message: "User created successfully",
                 user: newUser,
@@ -32,7 +37,7 @@ const UserController = {
 
     getUserById: async (req, res) => {
         try {
-            const id = req.body.verify_id;
+            const id = req.body.verify_id || req.params.id;
             const data = await User.findById(id).select("-password");
 
             if (data) {
@@ -58,15 +63,17 @@ const UserController = {
             const { id } = req.params;
             const data = await User.findByIdAndUpdate(id, req.body);
             const data2 = await User.findByIdAndUpdate(id);
+
             if (data) {
                 return res.status(200).json({
                     message: "Updated successfully",
                     user: data2,
                 });
+            } else {
+                return res.status(404).json({
+                    message: "User not found",
+                });
             }
-            return res.status(404).json({
-                message: "User not found",
-            });
         } catch (error) {
             return res.status(500).json({
                 message: "Server error",

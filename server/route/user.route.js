@@ -20,7 +20,7 @@ userRouter.get(
 );
 
 // api/user/update/id
-userRouter.put("account/:id", userController.update);
+userRouter.put("/update/:id", userController.update);
 
 // api/admin/update/id
 userRouter.put(
