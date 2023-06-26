@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Fragment, useState, useEffect } from "react";
 import { RootState } from "../store/store";
 import { register } from '../store/apiCall';
+import "../styles/pages/Register.scss"
 const Register = () => {
   const [userForm, setUserForm] = useState({
     fullname: "",
@@ -46,14 +47,17 @@ const Register = () => {
   return (
     <div className="register">
         <Header />
-        <div className="register">
+        <div className="register__wrapper">
           <div className="register__form">
           <form>
+          <h1>Create an account</h1>
+            <p>Enter your information below to proceed. If you already have an account, please log in instead.</p>
                 <div className="input_field">
                   <input
                     type="text"
                     name="username"
                     id="username"
+                    placeholder='Username'
                     required
                     onChange={(e) => {
                       setUserForm({
@@ -62,12 +66,13 @@ const Register = () => {
                       });
                     }}
                   />
-                  <label htmlFor="username">Username</label>
+            
                 </div>
                 <div className="input_field">
                   <input
                     type="password"
                     name="password"
+                    placeholder='Password'
                     id="password"
                     onChange={(e) => {
                       setUserForm({
@@ -77,13 +82,14 @@ const Register = () => {
                     }}
                     required
                   />
-                  <label htmlFor="password">Password</label>
+                
                 </div>
                 <div className="input_field">
                   <input
                     type="text"
                     name="mail"
                     id="mail"
+                    placeholder='Mail'
                     onChange={(e) => {
                       setUserForm({
                         ...userForm,
@@ -92,13 +98,14 @@ const Register = () => {
                     }}
                     required
                   />
-                  <label htmlFor="main">Email</label>
+              
                 </div>
                 <div className="input_field">
                   <input
                     type="text"
                     name="fullname"
                     id="fullname"
+                    placeholder='Fullname'
                     onChange={(e) => {
                       setUserForm({
                         ...userForm,
@@ -107,13 +114,14 @@ const Register = () => {
                     }}
                     required
                   />
-                  <label htmlFor="fullname">Fullname</label>
+                 
                 </div>
                 <div className="input_field">
                   <input
                     type="text"
                     name="date"
                     id="date"
+                    placeholder='Date'
                     onChange={(e) => {
                       setUserForm({
                         ...userForm,
@@ -122,13 +130,14 @@ const Register = () => {
                     }}
                     required
                   />
-                  <label htmlFor="date">Date</label>
+            
                 </div>
                 <div className="input_field">
                   <input
                     type="text"
                     name="phone"
                     id="phone"
+                    placeholder='Phone'
                     onChange={(e) => {
                       setUserForm({
                         ...userForm,
@@ -137,7 +146,7 @@ const Register = () => {
                     }}
                     required
                   />
-                  <label htmlFor="phone">Phone</label>
+               
                 </div>
 
                 <div className="input_field">
@@ -145,6 +154,7 @@ const Register = () => {
                     type="text"
                     name="gender"
                     id="gender"
+                    placeholder='Gender'
                     onChange={(e) => {
                       setUserForm({
                         ...userForm,
@@ -153,7 +163,7 @@ const Register = () => {
                     }}
                     required
                   />
-                  <label htmlFor="gender">gender</label>
+             
                 </div>
               </form>
 

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from "react";
 import Header from "../sections/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-
+import "../styles/pages/UserDetail.scss"
 const UserDetail = () => {
   const user = useSelector((state) => state.user.user);
   const [userForm, setUserForm] = useState({
@@ -168,9 +168,9 @@ const UserDetail = () => {
             />
             <label htmlFor="salary">Salary</label>
           </div>
+        <div className="button__update" onClick={()=>handleUpdate()}>Update</div>
         </form>
 
-        <div className="button__update" onClick={()=>handleUpdate()}>Update</div>
       </div>
     </Fragment>
   );

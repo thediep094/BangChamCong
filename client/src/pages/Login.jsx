@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../store/apiCall";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../store/store";
+import "../styles/pages/Login.scss"
 const Login = () => {
   const [userForm, setUserForm] = useState({
     username: "",
@@ -27,14 +28,18 @@ const Login = () => {
   return (
     <div className="login">
         <Header />
-        <div className="login">
+        <div className="login__wrapper">
           <div className="login__form">
           <form>
+            <h1>Login</h1>
+            <p>If you have an account with us, please sign in.</p>
                 <div className="input_field">
+          
                   <input
                     type="text"
                     name="username"
                     id="username"
+                    placeholder='Username'
                     required
                     onChange={(e) => {
                       setUserForm({
@@ -43,13 +48,14 @@ const Login = () => {
                       });
                     }}
                   />
-                  <label htmlFor="username">Username</label>
                 </div>
                 <div className="input_field">
+                  
                   <input
                     type="password"
                     name="password"
                     id="password"
+                    placeholder='Password'
                     onChange={(e) => {
                       setUserForm({
                         ...userForm,
@@ -58,7 +64,6 @@ const Login = () => {
                     }}
                     required
                   />
-                  <label htmlFor="password">Password</label>
                 </div>
               </form>
 
@@ -70,9 +75,7 @@ const Login = () => {
               <div>
                 <Link
                   to={"/register"}
-                  style={{
-                    textDecoration: "none",
-                  }}
+                  
                 >
                   Create account
                 </Link>

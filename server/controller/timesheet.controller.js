@@ -34,23 +34,25 @@ const TimesheetController = {
     },
     getTimesheetsByMonth: async (req, res) => {
         try {
-            const { month, id } = req.body; // Example: retrieve timesheets for July (month number: 7)
+            const { month, year, id } = req.body; // Example: retrieve timesheets for July (month number: 7)
             const timesheets = await Timesheet.aggregate([
                 {
                     $addFields: {
                         month: { $month: "$check_in" },
+                        year: { $year: "$check_in" },
                     },
                 },
                 {
                     $match: {
                         id: id,
                         month: month,
+                        year: year,
                     },
                 },
             ]);
 
             return res.status(200).json({
-                message: `Success getting Timesheets for month ${month}`,
+                message: `Success getting Timesheets for month ${month} year ${year}`,
                 data: timesheets,
             });
         } catch (error) {
