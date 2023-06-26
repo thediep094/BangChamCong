@@ -6,7 +6,7 @@ const authMiddleware = require("../middleware/auth.middleware");
 
 // api/user/account/id
 userRouter.get(
-    "/account/:id",
+    "/account",
     authMiddleware.checkRequired,
     authMiddleware.verifiyToken,
     userController.getUserById,

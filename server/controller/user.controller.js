@@ -32,7 +32,7 @@ const UserController = {
 
     getUserById: async (req, res) => {
         try {
-            const id = req.body.verify_id || req.params.id;
+            const id = req.body.verify_id;
             const data = await User.findById(id).select("-password");
 
             if (data) {
