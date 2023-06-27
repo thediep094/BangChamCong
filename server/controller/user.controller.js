@@ -22,7 +22,7 @@ const UserController = {
     },
     getAlls: async (req, res) => {
         try {
-            const users = await User.findAll();
+            const users = await User.find();
             return res.status(200).json({
                 message: "Users get successfully",
                 users: users,

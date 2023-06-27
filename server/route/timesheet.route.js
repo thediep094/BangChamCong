@@ -6,7 +6,7 @@ timesheetRouter.post("/getbyid", timesheetController.getTimesheetsByMonth);
 
 // api/timesheet/admin/getbymonth/
 timesheetRouter.post(
-    "/admin/getbymonth",
+    "/admin/getbyid",
     timesheetController.getTimesheetsByMonth,
 );
 

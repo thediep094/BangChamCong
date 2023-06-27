@@ -35,9 +35,16 @@ const UserDetail = () => {
 
   const handleUpdate = async () => {
     try {
+      let newForm;
+      if(!userForm.password){
+        const {password, ...form} = userForm;
+        newForm = form
+      } else {
+        newForm = userForm
+      }
       const res = await axios.put(
         `http://localhost:3000/api/user/update/${user?._id}`,
-        userForm
+        newForm
       );
       alert("Updated");
     } catch (error) {

@@ -1,0 +1,51 @@
+.listmember__wrapper {
+  padding: 50px;
+  h1 {
+    font-size: 45px;
+    font-weight: 500;
+    line-height: 53px;
+    letter-spacing: -2.25px;
+    color: #374639;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 500;
+    line-height: 53px;
+    letter-spacing: -2.25px;
+    color: #374639;
+  }
+
+  .listmember__content-table {
+    display: flex;
+    flex-direction: column;
+
+    .listmember__item {
+      display: flex;
+      flex-direction: row;
+      padding: 20px 0;
+      border-bottom: 1px solid #ecedec;
+    }
+
+    .chamcong__heading-item {
+      width: 20%;
+    }
+
+    .chamcong__edit {
+      width: 200px;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      a {
+        color: #374639;
+      }
+
+      .listmember__delete {
+        color: #374639;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+    }
+  }
+}

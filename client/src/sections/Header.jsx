@@ -13,7 +13,6 @@ const Header = () => {
       }
     }
   }, [user]);
-
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     window.location.reload();
@@ -22,6 +21,8 @@ const Header = () => {
     <div className="header">
       <div className="header__navigation">
         <a href="/">Cham cong</a>
+
+        { user?.role === "admin" ? <a href="/admin/list-member">Danh sach</a> : null}
       </div>
 
       <div className="header__buttons">
@@ -36,7 +37,7 @@ const Header = () => {
           </Fragment>
         ) : (
           <div className="header__user">
-            <a href="/account">{user.username}</a>
+            <a href={`/account`}>{user.username}</a>
             <div
               className="header__logout"
               onClick={() => {

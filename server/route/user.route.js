@@ -13,7 +13,7 @@ userRouter.get(
 );
 
 // api/user/admin/account/id
-userRouter.get(
+userRouter.post(
     "/admin/account/:id",
     authMiddleware.isAdmin,
     userController.getUserById,
@@ -29,8 +29,20 @@ userRouter.put(
     userController.update,
 );
 
-// /api/user/getAllUsers
-userRouter.get("/getAllUsers", authMiddleware.isAdmin, userController.getAlls);
+// /api/user/admin/getallusers
+userRouter.post(
+    "/admin/getallusers",
+    authMiddleware.isAdmin,
+    userController.getAlls,
+);
+
+// /api/user/admin/delete/id
+userRouter.post(
+    "/admin/delete/:id",
+    authMiddleware.isAdmin,
+    userController.delete,
+);
+
 // /api/user/create
 userRouter.post(
     "/create",

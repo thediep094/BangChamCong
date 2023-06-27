@@ -3,16 +3,17 @@ import Header from '../sections/Header'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import "../styles/pages/Homepage.scss"
-import { useNavigate } from 'react-router-dom'
-const Homepage = () => {
+import { useNavigate, useParams } from 'react-router-dom'
+const AdminStatistical = () => {
   const [month, setMonth] = useState(null)
   const [year, setYear] = useState(null)
   const [total, setTotal] = useState(0)
   const [dataTable, setDataTable] = useState([])
   const user = useSelector((state) => state.user.user);
+  const { id } = useParams()
   const fetchData = async () => {
     const bodyData = {
-      id: user?.id
+      id: id
     }
     if(month){
       bodyData.month = Number(month);
@@ -22,7 +23,7 @@ const Homepage = () => {
       bodyData.year = Number(year);
     }
     
-    const data = await axios.post(`http://localhost:3000/api/timesheet/getbyid`,
+    const data = await axios.post(`http://localhost:3000/api/timesheet/admin/getbyid`,
     bodyData)
     setDataTable(data.data.data)
     const totalSalary = data.data.data.reduce((total, item) => {
@@ -149,4 +150,4 @@ const Homepage = () => {
   )
 }
 
-export default Homepage
+export default AdminStatistical
