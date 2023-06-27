@@ -101,5 +101,18 @@ const UserController = {
             });
         }
     },
+
+    uploadImg: async (req, res) => {
+        try {
+            return res
+                .status(200)
+                .json({ message: "Image uploaded successfully" });
+        } catch (error) {
+            return res.status(500).json({
+                message: "Server error",
+                error: error,
+            });
+        }
+    },
 };
 module.exports = UserController;

@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const userController = require("../controller/user.controller");
 const userMiddleware = require("../middleware/user.middleware");
 const authMiddleware = require("../middleware/auth.middleware");
+const upload = require("../middleware/uploadImage");
 
 // api/user/account/id
 userRouter.get(
@@ -49,6 +50,14 @@ userRouter.post(
     userMiddleware.checkRequire,
     userMiddleware.checkExist,
     userController.create,
+);
+
+// /api/user/uploadimg
+
+userRouter.post(
+    "/uploadimg/:id",
+    upload.single("image"),
+    userController.uploadImg,
 );
 
 module.exports = userRouter;

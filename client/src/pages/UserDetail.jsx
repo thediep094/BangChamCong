@@ -5,6 +5,31 @@ import axios from "axios";
 import "../styles/pages/UserDetail.scss"
 const UserDetail = () => {
   const user = useSelector((state) => state.user.user);
+  const [file, setFile] = useState(null);
+
+  // Handle file selection
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]);
+  };
+
+  // Handle file upload
+  const handleUploadImg = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      // Make a POST request to the server
+      const response = await axios.post(`http://localhost:3000/api/user/uploadimg/${user?.id}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      alert("Image uploaded successfully");
+    } catch (error) {
+      alert("Error uploading image:");
+    }
+  };
   const [userForm, setUserForm] = useState({
     fullname: user?.fullname,
     username: user?.username,
@@ -55,6 +80,11 @@ const UserDetail = () => {
     <Fragment>
       <Header />
       <div className="userDetails">
+        <form className="form__img">
+          <input type="file"  onChange={(e)=>handleFileChange(e)}/>
+          <div className="form__img-btn " onClick={()=>handleUploadImg()}>Upload Img</div>
+        </form>
+
         <form>
           <div className="input_field">
             <input

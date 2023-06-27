@@ -1,7 +1,29 @@
 .userDetails {
   padding: 50px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+
+  .form__img {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    input {
+      width: fit-content;
+    }
+
+    .form__img-btn {
+      width: fit-content;
+      padding: 10px 10px;
+      background-color: #374639;
+      font-size: 19px;
+      line-height: 22px;
+      letter-spacing: -0.19px;
+      color: #d6ddc0;
+      cursor: pointer;
+    }
+  }
   form {
     max-width: 600px;
     width: 100%;
