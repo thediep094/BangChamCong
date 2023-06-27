@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header__navigation">
-        <a href="/">Home</a>
+        <a href="/">Cham cong</a>
       </div>
 
       <div className="header__buttons">

@@ -34,7 +34,17 @@ const TimesheetController = {
     },
     getTimesheetsByMonth: async (req, res) => {
         try {
-            const { month, year, id } = req.body; // Example: retrieve timesheets for July (month number: 7)
+            const { month, year, id } = req.body;
+
+            let matchQuery = { id: id };
+
+            if (month) {
+                matchQuery.month = month;
+            }
+
+            if (year) {
+                matchQuery.year = year;
+            }
             const timesheets = await Timesheet.aggregate([
                 {
                     $addFields: {
@@ -43,11 +53,7 @@ const TimesheetController = {
                     },
                 },
                 {
-                    $match: {
-                        id: id,
-                        month: month,
-                        year: year,
-                    },
+                    $match: matchQuery,
                 },
             ]);
 

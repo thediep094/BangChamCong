@@ -2,16 +2,16 @@ const express = require("express");
 const timesheetRouter = express.Router();
 const timesheetController = require("../controller/timesheet.controller");
 // api/timesheet/getbyid
-timesheetRouter.get("/getbyid", timesheetController.getTimesheetById);
+timesheetRouter.post("/getbyid", timesheetController.getTimesheetsByMonth);
 
 // api/timesheet/admin/getbymonth/
-timesheetRouter.get(
+timesheetRouter.post(
     "/admin/getbymonth",
     timesheetController.getTimesheetsByMonth,
 );
 
 // api/timesheet/admin/getbyyêar/
-timesheetRouter.get(
+timesheetRouter.post(
     "/admin/getbyyear",
     timesheetController.getTimesheetsByYear,
 );
