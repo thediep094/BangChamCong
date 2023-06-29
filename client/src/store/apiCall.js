@@ -1,10 +1,11 @@
+import { API_URL } from "../API_URL";
 import { loginStart, loginSuccess, loginFailure } from "./slice/userSlice";
 import axios from "axios";
 
 export const login = async (dispatch, user) => {
   dispatch(loginStart());
   try {
-    const res = await axios.post(`http://localhost:3000/api/auth/login`, {
+    const res = await axios.post(`${API_URL}/api/auth/login`, {
       username: user.username,
       password: user.password,
     });
@@ -20,7 +21,7 @@ export const login = async (dispatch, user) => {
 
 export const register = async (dispatch, user) => {
   try {
-    const res = await axios.post(`http://localhost:3000/api/user/create`, {
+    const res = await axios.post(`${API_URL}/api/user/create`, {
       fullname: user.fullname,
       username: user.username,
       password: user.password,
@@ -31,6 +32,7 @@ export const register = async (dispatch, user) => {
       role: user.role,
       phone: user.phone,
       salary: user.salary,
+      admin: user.admin,
     });
     alert("Tạo tài khoản thành công");
   } catch (error) {
@@ -41,7 +43,7 @@ export const register = async (dispatch, user) => {
 export const getDataFromAccessToken = async (dispatch, accessToken) => {
   dispatch(loginStart());
   try {
-    const res = await axios.get(`http://localhost:3000/api/user/account`, {
+    const res = await axios.get(`${API_URL}/api/user/account`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

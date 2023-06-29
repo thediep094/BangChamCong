@@ -2,28 +2,44 @@ import React, { Fragment, useEffect, useState } from "react";
 import Header from "../sections/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import "../styles/pages/UserDetail.scss"
+import "../styles/pages/UserDetail.scss";
+import { API_URL } from "../API_URL";
 const UserDetail = () => {
   const user = useSelector((state) => state.user.user);
-  const [file, setFile] = useState(null);
+  const [listPosition, setListPosition] = useState([]);
 
   // Handle file selection
   const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+    handleUploadImg(event.target.files[0])
   };
 
+  useEffect(() => {
+    const fetchPositions = async () => {
+      try {
+        const res = await axios.get(`${API_URL}/api/position/getall`);
+
+        setListPosition(res.data.data);
+      } catch (error) {}
+    };
+    fetchPositions();
+  }, []);
+
   // Handle file upload
-  const handleUploadImg = async () => {
+  const handleUploadImg = async (file) => {
     try {
       const formData = new FormData();
       formData.append("image", file);
 
       // Make a POST request to the server
-      const response = await axios.post(`http://localhost:3000/api/user/uploadimg/${user?.id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${API_URL}/api/user/uploadimg/${user?.id}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       alert("Image uploaded successfully");
     } catch (error) {
@@ -33,7 +49,7 @@ const UserDetail = () => {
   const [userForm, setUserForm] = useState({
     fullname: user?.fullname,
     username: user?.username,
-    password: "",
+    password: user?.password,
     date: user?.date,
     mail: user?.mail,
     avatar: user?.avatar,
@@ -41,13 +57,14 @@ const UserDetail = () => {
     role: user?.role,
     salary: user?.salary,
     gender: user?.gender,
+    position: "",
   });
 
   useEffect(() => {
     setUserForm({
       fullname: user?.fullname,
       username: user?.username,
-      password: "",
+      password: user?.password,
       date: user?.date,
       mail: user?.mail,
       avatar: user?.avatar,
@@ -55,20 +72,21 @@ const UserDetail = () => {
       role: user?.role,
       salary: user?.salary,
       gender: user?.gender,
+      position: user?.position?._id,
     });
   }, [user]);
 
   const handleUpdate = async () => {
     try {
       let newForm;
-      if(!userForm.password){
-        const {password, ...form} = userForm;
-        newForm = form
+      if (!userForm.password) {
+        const { password, ...form } = userForm;
+        newForm = form;
       } else {
-        newForm = userForm
+        newForm = userForm;
       }
       const res = await axios.put(
-        `http://localhost:3000/api/user/update/${user?._id}`,
+        `${API_URL}/api/user/update/${user?._id}`,
         newForm
       );
       alert("Updated");
@@ -81,11 +99,27 @@ const UserDetail = () => {
       <Header />
       <div className="userDetails">
         <form className="form__img">
-          <input type="file"  onChange={(e)=>handleFileChange(e)}/>
-          <div className="form__img-btn " onClick={()=>handleUploadImg()}>Upload Img</div>
+          <label className="input_field">
+            Click to upload image
+            
+            <input type="file" style={{
+              display: 'none'
+            }} onChange={(e) => handleFileChange(e)} />
+          </label>
+      
         </form>
 
         <form>
+        <div className="input_field">
+            <input
+              type="text"
+              name="username"
+              id="username"
+              disabled
+              value={user?.id}
+            />
+            <label htmlFor="username">Username</label>
+          </div>
           <div className="input_field">
             <input
               type="text"
@@ -99,7 +133,7 @@ const UserDetail = () => {
           </div>
           <div className="input_field">
             <input
-              type="password"
+              type="text"
               name="password"
               id="password"
               value={userForm?.password}
@@ -177,22 +211,38 @@ const UserDetail = () => {
             />
             <label htmlFor="phone">Phone</label>
           </div>
-
           <div className="input_field">
-            <input
-              type="text"
-              name="gender"
-              id="gender"
-              value={userForm?.gender}
+            <select
+              value={userForm.position}
+              onChange={(e) => {
+                setUserForm({
+                  ...userForm,
+                  position: e.target.value,
+                });
+              }}
+            >
+              {listPosition
+                ? listPosition.map((item) => {
+                    return <option value={item._id}>{item.name}</option>;
+                  })
+                : null}
+            </select>
+            <label htmlFor="phone">Position</label>
+          </div>
+          <div className="input_field">
+            <select
+              value={userForm.gender}
               onChange={(e) => {
                 setUserForm({
                   ...userForm,
                   gender: e.target.value,
                 });
               }}
-              required
-            />
-            <label htmlFor="gender">gender</label>
+            >
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <label htmlFor="phone">Gender</label>
           </div>
 
           <div className="input_field">
@@ -200,14 +250,15 @@ const UserDetail = () => {
               type="text"
               name="salary"
               id="salary"
-              value={userForm?.salary}
+              value={user?.salary}
               disabled
             />
             <label htmlFor="salary">Salary</label>
           </div>
-        <div className="button__update" onClick={()=>handleUpdate()}>Update</div>
+          <div className="button__update" onClick={() => handleUpdate()}>
+            Update
+          </div>
         </form>
-
       </div>
     </Fragment>
   );

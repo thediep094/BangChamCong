@@ -1,5 +1,21 @@
 .listmember__wrapper {
   padding: 50px;
+
+  .listmember__heading-inputs {
+    padding: 12px 24px 9px 24px;
+  }
+
+  .listmember__heading-btn {
+    margin: 0 10px;
+    background-color: #374639;
+    color: #d6ddc0;
+    cursor: pointer;
+    font-size: 19px;
+    line-height: 22px;
+    letter-spacing: -0.19px;
+    border: none;
+    padding: 12px 24px 9px 24px;
+  }
   h1 {
     font-size: 45px;
     font-weight: 500;

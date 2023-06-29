@@ -32,7 +32,7 @@ userRouter.put(
 
 // /api/user/admin/getallusers
 userRouter.post(
-    "/admin/getallusers",
+    "/admin/getallusers/:position",
     authMiddleware.isAdmin,
     userController.getAlls,
 );
@@ -47,6 +47,7 @@ userRouter.post(
 // /api/user/create
 userRouter.post(
     "/create",
+    authMiddleware.isAdmin,
     userMiddleware.checkRequire,
     userMiddleware.checkExist,
     userController.create,

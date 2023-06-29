@@ -22,7 +22,14 @@ const Header = () => {
       <div className="header__navigation">
         <a href="/">Cham cong</a>
 
-        { user?.role === "admin" ? <a href="/admin/list-member">Danh sach</a> : null}
+        { user?.role === "admin" ? <a href="/admin/list-member/all">Danh sach</a> : null}
+        {user?.role === "admin" ? <a href="/register" className="header__account">
+            Tao tai khoan
+          </a> : null}  
+
+          {user?.role === "admin" ? <a href="/admin/position" className="header__account">
+            Tao chuc vu
+          </a> : null}  
       </div>
 
       <div className="header__buttons">
@@ -30,9 +37,6 @@ const Header = () => {
           <Fragment>
             <a className="header__account" href="/login">
             Login
-          </a>
-          <a href="/register" className="header__account">
-            Register
           </a>
           </Fragment>
         ) : (
