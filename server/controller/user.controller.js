@@ -125,5 +125,35 @@ const UserController = {
             });
         }
     },
+
+    updateFace: async (req, res) => {
+        try {
+            const { id } = req.params;
+            console.log(req.body);
+            const data = await User.findOneAndUpdate(
+                {
+                    id: id,
+                },
+                req.body,
+            );
+            const data2 = await User.findOne({ id: id });
+
+            if (data) {
+                return res.status(200).json({
+                    message: "Updated successfully",
+                    user: data2,
+                });
+            } else {
+                return res.status(404).json({
+                    message: "User not found",
+                });
+            }
+        } catch (error) {
+            return res.status(500).json({
+                message: "Server error",
+                error: error,
+            });
+        }
+    },
 };
 module.exports = UserController;
