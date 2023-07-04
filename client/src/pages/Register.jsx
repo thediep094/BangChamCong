@@ -2,6 +2,8 @@ import React from "react";
 import Header from "../sections/Header";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import { Fragment, useState, useEffect } from "react";
 import { RootState } from "../store/store";
 import { register } from "../store/apiCall";
@@ -15,13 +17,13 @@ const Register = () => {
     fullname: "",
     username: "",
     password: "",
-    date: "",
+    date: new Date(),
     mail: "",
     avatar: "",
     phone: "",
     role: "user",
     slary: 0,
-    position: "",
+    position: "none",
     gender: "male",
   });
 
@@ -56,6 +58,8 @@ const Register = () => {
       admin: user?.role == "admin" ? true : false,
     });
   };
+
+
 
   return (
     <div className="register">
@@ -129,19 +133,11 @@ const Register = () => {
               />
             </div>
             <div className="input_field">
-              <input
-                type="text"
-                name="date"
-                id="date"
-                placeholder="Date"
-                onChange={(e) => {
-                  setUserForm({
+            <DatePicker selected={userForm.date} onChange={(date) => setUserForm({
                     ...userForm,
-                    date: e.target.value,
-                  });
-                }}
-                required
-              />
+                    date: date,
+                  })} />
+
             </div>
             <div className="input_field">
               <input
@@ -168,6 +164,7 @@ const Register = () => {
                   });
                 }}
               >
+                <option value="none" disabled>None</option>
                 {listPosition
                   ? listPosition.map((item) => {
                       return <option value={item._id}>{item.name}</option>;

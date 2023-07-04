@@ -3,17 +3,20 @@ import Header from "../sections/Header";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import "../styles/pages/UserDetail.scss";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
 import { API_AI, API_URL } from "../API_URL";
 import Loading from "../sections/Loading";
 const UserDetail = () => {
   const [isLoading, setIsLoading] = useState(false);
   const user = useSelector((state) => state.user.user);
   const [listPosition, setListPosition] = useState([]);
-
   // Handle file selection
   const handleFileChange = (event) => {
     handleUploadImg(event.target.files[0]);
   };
+
 
   useEffect(() => {
     setIsLoading(true);
@@ -53,7 +56,7 @@ const UserDetail = () => {
       );
 
       setIsLoading(false);
-  
+
     } catch (error) {
       alert("Error updating");
       setIsLoading(false);
@@ -63,14 +66,14 @@ const UserDetail = () => {
     fullname: user?.fullname,
     username: user?.username,
     password: user?.password,
-    date: user?.date,
+    date: user?.date ? new Date(user?.date) : new Date(),
     mail: user?.mail,
     avatar: user?.avatar,
     phone: user?.phone,
     role: user?.role,
     salary: user?.salary,
     gender: user?.gender,
-    position: "",
+    position: user?.position?._id,
   });
 
   useEffect(() => {
@@ -78,7 +81,7 @@ const UserDetail = () => {
       fullname: user?.fullname,
       username: user?.username,
       password: user?.password,
-      date: user?.date,
+      date: user?.date ? new Date(user?.date) : new Date(),
       mail: user?.mail,
       avatar: user?.avatar,
       phone: user?.phone,
@@ -88,6 +91,7 @@ const UserDetail = () => {
       position: user?.position?._id,
     });
   }, [user]);
+
 
   const handleUpdate = async () => {
     setIsLoading(true);
@@ -205,19 +209,11 @@ const UserDetail = () => {
                 <label htmlFor="fullname">Fullname</label>
               </div>
               <div className="input_field">
-                <input
-                  type="text"
-                  name="date"
-                  id="date"
-                  value={userForm?.date}
-                  onChange={(e) => {
-                    setUserForm({
-                      ...userForm,
-                      date: e.target.value,
-                    });
-                  }}
-                  required
-                />
+              <DatePicker selected={userForm?.date || undefined} onChange={(date) => setUserForm({
+                    ...userForm,
+                    date: date,
+                  })} />
+                
                 <label htmlFor="date">Date</label>
               </div>
               <div className="input_field">
@@ -248,8 +244,8 @@ const UserDetail = () => {
                 >
                   {listPosition
                     ? listPosition.map((item) => {
-                        return <option value={item._id}>{item.name}</option>;
-                      })
+                      return <option value={item._id}>{item.name}</option>;
+                    })
                     : null}
                 </select>
                 <label htmlFor="phone">Position</label>
